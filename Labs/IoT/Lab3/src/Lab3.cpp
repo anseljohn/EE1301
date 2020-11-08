@@ -2,7 +2,7 @@
 //       THIS IS A GENERATED FILE - DO NOT EDIT       //
 /******************************************************/
 
-#line 1 "/Users/owner/Documents/School/EE1301/Labs/IoT/Lab3/src/Lab3.ino"
+#line 1 "/Users/owner/Documents/School/ee1301Main/EE1301/Labs/IoT/Lab3/src/Lab3.ino"
 /*
  * Project Lab3
  * Description:
@@ -16,7 +16,7 @@
 // Function headers
 void setup();
 void loop();
-#line 12 "/Users/owner/Documents/School/EE1301/Labs/IoT/Lab3/src/Lab3.ino"
+#line 12 "/Users/owner/Documents/School/ee1301Main/EE1301/Labs/IoT/Lab3/src/Lab3.ino"
 int setMode(String modeStr);
 
 // Global vars
@@ -24,7 +24,7 @@ double temp = 0;
 int TEMP_PIN = D7;
 int LED_PIN = D4;
 Adafruit_NeoPixel led = Adafruit_NeoPixel(1, LED_PIN, WS2811);
-enum thermode {COOLING, OFF, HEATING};
+enum thermode {COOLING, OFF, HEATING, REDALERT};
 thermode mode = OFF;
 
 int coolingColor = led.Color(0, 0, 100);
@@ -76,6 +76,8 @@ int setMode(String modeStr) {
     mode = OFF;
   } else if (modeStr == "Heat") {
     mode = HEATING;
+  } else if (modeStr == "REDALERT") {
+    mode = REDALERT;
   } else {
     Serial.print("Invalid mode: ");
     Serial.println(modeStr);
