@@ -28,8 +28,9 @@ enum thermode {COOLING, OFF, HEATING, REDALERT};
 thermode mode = OFF;
 
 int coolingColor = led.Color(0, 0, 100);
-int heatingColor = led.Color(100, 0, 0);
+int heatingColor = led.Color(255,165,0);
 int offColor = led.Color(100, 100, 100);
+int redAlertColor = led.Color(255, 0, 0);
 
 void setup() {
   Serial.begin(9600);
@@ -59,6 +60,10 @@ void loop() {
       break;
     case HEATING: 
       led.setPixelColor(0, heatingColor);
+      break;
+    case REDALERT:
+      led.setPixelColor(0, redAlertColor);
+      Particle.publish("REDALERT", "ACTIVE");
       break;
   }
 
