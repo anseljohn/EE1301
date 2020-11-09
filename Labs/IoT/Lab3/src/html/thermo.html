@@ -28,14 +28,13 @@
 
         <form action="https://api.particle.io/v1/devices/4b0052001051373331333230/setTemp?access_token=caa0f0316f2539c759d668ad51f762cb3e90a8cf" method="POST">
             <input type="text" name="args" value="(50-90)"><br>
-            <input type="submit" value="Set Temperature">
+            <input type="submit" value="Set Temperature" onclick="setRadioButtonChecked()">
         </form><br>
 
-        <form action="https://api.particle.io/v1/devices/4b0052001051373331333230/setMode?access_token=caa0f0316f2539c759d668ad51f762cb3e90a8cf" method="POST">
-            <input type="radio" name="args" value="Heat">Set thermostat mode to HEATING.<br>
-            <input type="radio" name="args" value="Off">Set thermostat mode to OFF.<br>
-            <input type="radio" name="args" value="Cool">Set thermostat mode to COOL.<br>
-            <input type="radio" name="args" value="REDALERT">Set thermostat mode to REDALERT.<br>
+        <form name="modes" action="https://api.particle.io/v1/devices/4b0052001051373331333230/setMode?access_token=caa0f0316f2539c759d668ad51f762cb3e90a8cf" method="POST">
+            <input type="radio" name="args" id="heat" value="Heat">Set thermostat mode to HEATING.<br>
+            <input type="radio" name="args" id="off" value="Off">Set thermostat mode to OFF.<br>
+            <input type="radio" name="args" id="cool" value="Cool">Set thermostat mode to COOL.<br>
             <input type="submit" value="Submit">
         </form><br>
             

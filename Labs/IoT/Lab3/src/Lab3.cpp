@@ -22,6 +22,7 @@ int setMode(String modeStr);
 
 // Global vars
 double temp = 0;
+double desiredTemp = 0;
 int TEMP_PIN = D7;
 int LED_PIN = D4;
 Adafruit_NeoPixel led = Adafruit_NeoPixel(1, LED_PIN, WS2811);
@@ -38,6 +39,7 @@ void setup() {
   pinMode(A0, INPUT);
 
   Particle.variable("temperature", temp);
+  Particle.variable("desiredTemp", desiredTemp);
   Particle.function("setMode", setMode);
   Particle.function("setTemp", setTemp);
 
@@ -86,12 +88,12 @@ int setMode(String modeStr) {
 }
 
 int setTemp(String desiredTempStr) {
-  double desiredTemp = desiredTempStr.toFloat();
+  desiredTemp = desiredTempStr.toFloat();
   if (desiredTemp > temp) {
     setMode("Heat");
   } else if (desiredTemp < temp) {
     setMode("Cool");
-  } else {
+  } else if (abs(desiredTemp - temp) < 1) {
     setMode("Off");
   }
   return 1;

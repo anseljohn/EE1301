@@ -79,12 +79,12 @@ int setMode(String modeStr) {
 }
 
 int setTemp(String desiredTempStr) {
-  double desiredTemp = desiredTempStr.toFloat();
+  desiredTemp = desiredTempStr.toFloat();
   if (desiredTemp > temp) {
     setMode("Heat");
   } else if (desiredTemp < temp) {
     setMode("Cool");
-  } else {
+  } else if (abs(desiredTemp - temp) < 1) {
     setMode("Off");
   }
   return 1;
