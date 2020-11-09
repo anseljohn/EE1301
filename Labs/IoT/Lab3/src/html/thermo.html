@@ -1,11 +1,43 @@
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+
 <html>
     <body>
+            
+        Current Temperature: <span id="temperature"></span>&deg; F<br>
+        Desired Temperature: <span id="desiredTemp"></span>&deg; F<br>
+
+        <script type="text/javascript">
+            function start(objButton) {
+                var deviceID = "4b0052001051373331333230";
+                var accessToken = "caa0f0316f2539c759d668ad51f762cb3e90a8cf";
+                var baseURL = "https://api.particle.io/v1/devices/"
+
+                requestURL = "https://api.particle.io/v1/devices/4b0052001051373331333230/temperature?access_token=caa0f0316f2539c759d668ad51f762cb3e90a8cf"
+                $.getJSON(requestURL, function(json) {
+                        document.getElementById("temperature").innerHTML = (json.result * (9/5) + 32).toFixed(2);
+                });
+
+                requestURL = "https://api.particle.io/v1/devices/4b0052001051373331333230/desiredTemp?access_token=caa0f0316f2539c759d668ad51f762cb3e90a8cf"
+                $.getJSON(requestURL, function(json) {
+                        document.getElementById("desiredTemp").innerHTML = json.result;
+                });
+            }
+        </script>
+
+        <button id="connectbutton" onclick="start()">Refresh Data</button><br><br>
+
+        <form action="https://api.particle.io/v1/devices/4b0052001051373331333230/setTemp?access_token=caa0f0316f2539c759d668ad51f762cb3e90a8cf" method="POST">
+            <input type="text" name="args" value="(50-90)"><br>
+            <input type="submit" value="Set Temperature">
+        </form><br>
+
         <form action="https://api.particle.io/v1/devices/4b0052001051373331333230/setMode?access_token=caa0f0316f2539c759d668ad51f762cb3e90a8cf" method="POST">
             <input type="radio" name="args" value="Heat">Set thermostat mode to HEATING.<br>
             <input type="radio" name="args" value="Off">Set thermostat mode to OFF.<br>
             <input type="radio" name="args" value="Cool">Set thermostat mode to COOL.<br>
             <input type="radio" name="args" value="REDALERT">Set thermostat mode to REDALERT.<br>
             <input type="submit" value="Submit">
-        </form>
+        </form><br>
+            
     </body>
 </html>
