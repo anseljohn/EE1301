@@ -7,9 +7,18 @@ const char BLANK = '-';
 const char ROBOT = 'X';
 const char GOAL = 'O';
 const char WALL = 'W';
+
+// For coordinate system
+const int ROW = 0;
+const int COL = 1;
+
 const int screen_num_lines = 25;
 const int lengthX = 10;       // for now we only support square boards
 const int lengthY = 10;       // it "should" work with non-square, YMMV
+
+int xPos = 0, yPos = 0;
+char board[lengthX][lengthY] = {0};
+
 // Board is described by the following coordinate system:
 // 0 --> +X
 // |
@@ -18,6 +27,8 @@ const int lengthY = 10;       // it "should" work with non-square, YMMV
 // +Y
 
 void initBoard(char board[lengthX][lengthY], int &xPos, int &yPos);
+bool rowsConnected(int rowOne, int rowTwo[lengthX]);
+bool rowsConnected(int rowOne, bool up);
 void clearScreen();
 void showGrid(char board[lengthX][lengthY]);
 
@@ -27,8 +38,6 @@ void updateGrid(char board[lengthX][lengthY], int &xPos, int &yPos, char action)
 int main()
 {
     srand(time(NULL));
-    char board[lengthX][lengthY] = {0};
-    int xPos = 0, yPos = 0;
 
     initBoard(board, xPos, yPos);
 
@@ -53,6 +62,16 @@ int main()
     return 0;
 }
 
+
+
+
+
+
+// ==========================================================================
+//                          CONSTRUCTION ZONE BEGINNING
+// ==========================================================================
+
+
 /*
 Description: Initializes game board. Sets all characters in board as blanks,
 then sets position of goal, and then sets position of robot.
@@ -63,8 +82,18 @@ Inputs:
 Outputs: NA
 */
 void initBoard(char board[lengthX][lengthY], int &xPos, int &yPos) {
-    xPos = rand() % lengthX;
-    yPos = rand() % lengthY;
+    int goalPosX = rand() % lengthX;
+    int goalPosY = rand() % lengthY;
+    xPos = goalPosX;
+    yPos = goalPosY;
+
+    while (goalPosX == xPos || goalPosY == yPos) {
+        if (goalPosX == xPos) {
+            goalPosX = rand() % lengthX;
+        } else if (goalPosY == yPos) {
+            goalPosY = rand() % lengthY;
+        }
+    }
 
     for(int curRow=0; curRow < lengthY; curRow++) {
         for(int curCol=0; curCol < lengthX; curCol++) {
@@ -72,9 +101,71 @@ void initBoard(char board[lengthX][lengthY], int &xPos, int &yPos) {
         }
     }
 
-    board[0][0] = GOAL;
+    board[goalPosX][goalPosY] = GOAL;
     board[xPos][yPos] = ROBOT;
 }
+
+bool coordsConnected(int c1[lengthX][lengthY], int c2[lengthX][lengthY]) {
+
+    auto opChangeByDirection = [](int &operand, bool leftOrUp) {
+        if (leftOrUp) {
+            operand--;
+        } else {
+            operand++;
+        }
+    };
+
+    bool up = c2[1] < c1[1];
+    bool left = c1[0] < c1[0];
+    
+    int i = c1
+}
+
+bool rowsConnected(int rowOne, int rowTwo[lengthX]) {
+    for (int i = 0; i < lengthX; i++) {
+        if (board[rowOne][i] == BLANK && rowTwo[i] == BLANK
+            || board[rowOne][i] == ROBOT || rowTwo[i] == ROBOT) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool rowsConnected(int rowOne, bool up) {
+    int rowTwo = rowOne - 1;
+    if (!up) {
+        rowTwo = rowOne + 1;
+    }
+    rowsConnected(rowOne, board[rowTwo]);
+}
+
+bool connectorsConnected(int row, int connectorColOne, int connectorColTwo) {
+    bool left = connectorColOne > connectorColTwo;
+
+    auto opChangeByDirection = [](int &operand, bool left) {
+        if (left) {
+            operand--;
+        } else {
+            operand++;
+        }
+    };
+
+    int i = connectorColOne;
+    opChangeByDirection(i, left);
+
+    for (int i = connectorColOne; i != connectorColTwo; opChangeByDirection(i, left)) {
+        if (board[row][i])
+    }
+}
+
+
+// ==========================================================================
+//                          CONSTRUCTION ZONE END
+// ==========================================================================
+
+
+
+
 
 /*
 Description: Loops through given game board to determine if it contains given char findMe.
