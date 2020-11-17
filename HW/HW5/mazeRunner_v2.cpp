@@ -60,15 +60,19 @@ Outputs: NA
 void initBoard(char board[lengthX][lengthY], int &xPos, int &yPos) {
         for(int curRow=0; curRow < lengthY; curRow++) {
             for(int curCol=0; curCol < lengthX; curCol++) {
-                board[curCol][curRow] = BLANK;
+                if (curRow == 0) {
+                    board[curRow][curCol]
+                }
+                board[curRow][curCol] = BLANK;
             }
         }
 
         board[0][0] = GOAL;
-        board[lengthX/2][lengthY/2] = ROBOT;
+        xPos = lengthX - 2;
+        yPos = lengthY - 2;
 
-        xPos = lengthX/2;
-        yPos = lengthY/2;
+        board[yPos][xPos] = ROBOT;
+
 }
 
 /*

@@ -27,7 +27,7 @@ char board[lengthX][lengthY] = {0};
 // +Y
 
 void initBoard(char board[lengthX][lengthY], int &xPos, int &yPos);
-bool coordsConnected(int c1[2], int c2[2])
+bool coordsConnected(int c1[2], int c2[2]);
 bool rowsConnected(int rowOne, int rowTwo[lengthX]);
 bool rowsConnected(int rowOne, bool up);
 void clearScreen();
