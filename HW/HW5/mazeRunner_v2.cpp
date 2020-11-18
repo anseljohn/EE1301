@@ -6,6 +6,7 @@ using namespace std;
 const char BLANK = '-';
 const char ROBOT = 'X';
 const char GOAL = 'O';
+const char WALL = 'W';
 const int screen_num_lines = 25;
 const int lengthX = 10;       // for now we only support square boards
 const int lengthY = 10;       // it "should" work with non-square, YMMV
@@ -61,7 +62,7 @@ void initBoard(char board[lengthX][lengthY], int &xPos, int &yPos) {
         for(int curRow=0; curRow < lengthY; curRow++) {
             for(int curCol=0; curCol < lengthX; curCol++) {
                 if (curRow == 0) {
-                    board[curRow][curCol]
+                    board[curRow][curCol] = WALL;
                 }
                 board[curRow][curCol] = BLANK;
             }
