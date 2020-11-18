@@ -61,6 +61,8 @@ Outputs: NA
 void initBoard(char board[lengthX][lengthY], int &xPos, int &yPos) {
         for(int curRow=0; curRow < lengthY; curRow++) {
             for(int curCol=0; curCol < lengthX; curCol++) {
+
+                // Adding walls to default board!
                 if (curRow == 0 && curCol > 2) {
                     board[curCol][curRow] = WALL;
                 } else {
@@ -70,7 +72,13 @@ void initBoard(char board[lengthX][lengthY], int &xPos, int &yPos) {
                 if (curRow == 1 && curCol <= 1) {
                     board[curCol][curRow] = WALL;
                 }
+
             }
+        }
+
+        int firstRow[lengthX] = {'a','b','c','d','e','f','g','h','i','j'};
+        for (int i = 0; i < lengthX; i++) {
+            board[i][0] = firstRow[i];
         }
 
         board[0][0] = GOAL;
