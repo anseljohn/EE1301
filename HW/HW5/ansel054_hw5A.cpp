@@ -61,10 +61,15 @@ Outputs: NA
 void initBoard(char board[lengthX][lengthY], int &xPos, int &yPos) {
         for(int curRow=0; curRow < lengthY; curRow++) {
             for(int curCol=0; curCol < lengthX; curCol++) {
-                if (curRow == 0) {
-                    board[curRow][curCol] = WALL;
+                if (curRow == 0 && curCol > 2) {
+                    board[curCol][curRow] = WALL;
+                } else {
+                    board[curCol][curRow] = BLANK;
                 }
-                board[curRow][curCol] = BLANK;
+
+                if (curRow == 1 && curCol <= 1) {
+                    board[curCol][curRow] = WALL;
+                }
             }
         }
 
@@ -72,7 +77,7 @@ void initBoard(char board[lengthX][lengthY], int &xPos, int &yPos) {
         xPos = lengthX - 2;
         yPos = lengthY - 2;
 
-        board[yPos][xPos] = ROBOT;
+        board[xPos][yPos] = ROBOT;
 
 }
 
@@ -134,14 +139,22 @@ Outputs: NA
 */
 void updateGrid(char board[lengthX][lengthY],int & xPos, int & yPos,char action) {
     board[xPos][yPos] = BLANK;
-    if       (action == 'l' && xPos > 0) {
+    if (action == 'l' && xPos > 0) {
+        if (board[xPos - 1][yPos] != WALL) {
             xPos--;
+        }
     } else if(action == 'r' && xPos < lengthX - 1) {
-            xPos++;
+        if (board[xPos + 1][yPos] != WALL) {
+            xPos--;
+        }
     } else if(action == 'u' && yPos > 0) {
+        if (board[xPos][yPos - 1] != WALL) {
             yPos--;
+        }
     } else if(action == 'd' && yPos < lengthY - 1) {
+        if (board[xPos][yPos + 1] != WALL) {
             yPos++;
+        }
     }
     board[xPos][yPos] = ROBOT;
 }
