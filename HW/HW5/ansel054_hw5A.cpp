@@ -26,8 +26,19 @@ void updateGrid(char board[lengthX][lengthY], int &xPos, int &yPos, char action)
 
 int main()
 {
-    char board[lengthX][lengthY] = {0};
-    int xPos = 0, yPos = 0;
+    char board[lengthY][lengthX] = {
+            {BLANK, BLANK, BLANK, WALL , WALL , WALL , WALL , WALL , WALL , WALL},
+            {WALL , BLANK, BLANK, BLANK, BLANK, BLANK, WALL , WALL , WALL , WALL},
+            {WALL , BLANK, WALL , WALL , WALL , BLANK, BLANK, WALL , WALL , WALL},
+            {WALL , WALL , BLANK, BLANK, BLANK, BLANK, WALL , WALL , WALL , WALL},
+            {WALL , WALL , BLANK, BLANK, BLANK, WALL , WALL , WALL , WALL , WALL},
+            {BLANK, BLANK, BLANK, WALL , WALL , BLANK, BLANK, WALL , WALL , WALL},
+            {BLANK, BLANK, BLANK, WALL , WALL , WALL , WALL , WALL , WALL , WALL},
+            {WALL , WALL , BLANK , BLANK , BLANK, WALL , WALL , WALL , WALL , WALL},     
+            {BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, WALL , WALL , WALL},
+            {BLANK, BLANK, BLANK, WALL , WALL , BLANK, BLANK, BLANK, BLANK, ROBOT}
+        };
+    int xPos = lengthX - 1, yPos = lengthY - 1;
 
     initBoard(board, xPos, yPos);
 
@@ -58,35 +69,8 @@ Inputs:
     int yPos - saved y position of robot
 Outputs: NA
 */
-void initBoard(char board[lengthX][lengthY], int &xPos, int &yPos) {
-        for(int curRow=0; curRow < lengthY; curRow++) {
-            for(int curCol=0; curCol < lengthX; curCol++) {
-
-                // Adding walls to default board!
-                if (curRow == 0 && curCol > 2) {
-                    board[curCol][curRow] = WALL;
-                } else {
-                    board[curCol][curRow] = BLANK;
-                }
-
-                if (curRow == 1 && curCol <= 1) {
-                    board[curCol][curRow] = WALL;
-                }
-
-            }
-        }
-
-        int firstRow[lengthX] = {'a','b','c','d','e','f','g','h','i','j'};
-        for (int i = 0; i < lengthX; i++) {
-            board[i][0] = firstRow[i];
-        }
-
+void initBoard(char board[lengthY][lengthX], int &xPos, int &yPos) {
         board[0][0] = GOAL;
-        xPos = lengthX - 2;
-        yPos = lengthY - 2;
-
-        board[xPos][yPos] = ROBOT;
-
 }
 
 /*
@@ -97,10 +81,10 @@ Inputs:
 Outputs:
     bool - returns true if board contains findMe, else returns false 
 */
-bool hasChar(char board[lengthX][lengthY], char findMe) {
+bool hasChar(char board[lengthY][lengthX], char findMe) {
     for(int curRow=0; curRow < lengthY; curRow++) {
         for(int curCol=0; curCol < lengthX; curCol++) {
-            if(board[curCol][curRow] == findMe) {
+            if(board[curRow][curCol] == findMe) {
                 return true;
             }
         } //end curCol loop
@@ -130,7 +114,7 @@ Outputs: NA
 void showGrid(char board[lengthX][lengthY]) {
     for(int curRow=0; curRow < lengthY; curRow++) {
         for(int curCol=0; curCol < lengthX; curCol++) {
-            cout << board[curCol][curRow];
+            cout << board[curRow][curCol];
         } // end curCol loop
         cout << endl;
     } // end curRow loop
@@ -145,24 +129,25 @@ Inputs:
     char action - desired direction for robot to move, i.e. 'l', 'r', 'u', or 'd'
 Outputs: NA
 */
-void updateGrid(char board[lengthX][lengthY],int & xPos, int & yPos,char action) {
-    board[xPos][yPos] = BLANK;
+void updateGrid(char board[lengthX][lengthY],int & xPos, int & yPos, char action) {
+    action = tolower(action);
+    board[yPos][xPos] = BLANK;
     if (action == 'l' && xPos > 0) {
-        if (board[xPos - 1][yPos] != WALL) {
+        if (board[yPos][xPos - 1] != WALL) {
             xPos--;
         }
     } else if(action == 'r' && xPos < lengthX - 1) {
-        if (board[xPos + 1][yPos] != WALL) {
-            xPos--;
+        if (board[yPos][xPos + 1] != WALL) {
+            xPos++;
         }
     } else if(action == 'u' && yPos > 0) {
-        if (board[xPos][yPos - 1] != WALL) {
+        if (board[yPos - 1][xPos] != WALL) {
             yPos--;
         }
     } else if(action == 'd' && yPos < lengthY - 1) {
-        if (board[xPos][yPos + 1] != WALL) {
+        if (board[yPos + 1][xPos] != WALL) {
             yPos++;
         }
     }
-    board[xPos][yPos] = ROBOT;
+    board[yPos][xPos] = ROBOT;
 }
