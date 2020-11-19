@@ -1,3 +1,10 @@
+// EE 1301 
+// HW 5A
+// John Anselmo
+// ansel054
+// Changed it to arr[row #][col #] instead of arr[x pos][y pos]
+
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -50,10 +57,11 @@ int main()
 }
 
 /*
-Description: Initializes game board. Sets all characters in board as blanks,
-then sets position of goal, and then sets position of robot.
+Description: Initializes default or custom board depending on whether a custom one
+exists or not.
 Inputs:
-    char board[][] - 2D array used to represent game board
+    char board[][] - 2D array used to repre
+    sent game board
     int xPos - saved x position of robot
     int yPos - saved y position of robot
 Outputs: NA
@@ -61,7 +69,7 @@ Outputs: NA
 void initBoard(char board[lengthY][lengthX], int &xPos, int &yPos) {
     ifstream customBoard ("./maze.txt");
     string line = "";
-    if (false) {//customBoard.is_open()) {
+    if (customBoard.is_open()) {
         int i = 0;
         while (getline(customBoard, line)) {
             for (int j = 0; j < lengthX; j++) {
@@ -75,6 +83,8 @@ void initBoard(char board[lengthY][lengthX], int &xPos, int &yPos) {
             i++;
         }
     } else {
+        
+        // Creating the default board
         char defaultBoard[lengthY][lengthX] = {
             {BLANK , BLANK , GOAL  , WALL  , WALL  , WALL  , WALL  , WALL  , WALL  , WALL  },
             {BLANK , BLANK , BLANK , BLANK , BLANK , BLANK , WALL  , WALL  , WALL  , WALL  },
@@ -88,6 +98,7 @@ void initBoard(char board[lengthY][lengthX], int &xPos, int &yPos) {
             {BLANK , BLANK , BLANK , WALL  , WALL  , BLANK , BLANK , BLANK , BLANK , ROBOT }
         };
 
+        // Couldn't apply the above board directly so enter it through nested for
         for(int curRow=0; curRow < lengthY; curRow++) {
             for(int curCol=0; curCol < lengthX; curCol++) {
                 board[curRow][curCol] = defaultBoard[curRow][curCol];
