@@ -61,7 +61,7 @@ Outputs: NA
 void initBoard(char board[lengthY][lengthX], int &xPos, int &yPos) {
     ifstream customBoard ("./maze.txt");
     string line = "";
-    if (customBoard.is_open()) {
+    if (false) {//customBoard.is_open()) {
         int i = 0;
         while (getline(customBoard, line)) {
             for (int j = 0; j < lengthX; j++) {
@@ -69,7 +69,6 @@ void initBoard(char board[lengthY][lengthX], int &xPos, int &yPos) {
                 if (charAtIJ == ROBOT) {
                     xPos = j;
                     yPos = i;
-                    
                 }
                 board[i][j] = charAtIJ;
             }
