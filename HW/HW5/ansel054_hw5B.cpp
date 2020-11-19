@@ -13,7 +13,7 @@
 using namespace std;
 
 int main(int argc, char* argv[]) {
-    if (argc != 3) {
+    if (argc != 4) {
         cout << "ERROR: Incorrect number of arguments.\nProgram requires 3\n";
         return 1;
     } else {
@@ -22,6 +22,8 @@ int main(int argc, char* argv[]) {
         ofstream outputFile;
         outputFile.open("./randArray.txt");
 
+        // Order of inputs: run_command row_count column_count max_random_number
+        // Throw out first input
         const int rows = stoi((string) argv[1]);
         const int columns = stoi((string) argv[2]);
         const int max = stoi((string) argv[3]);
