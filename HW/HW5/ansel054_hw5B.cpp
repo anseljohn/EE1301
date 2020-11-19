@@ -35,7 +35,9 @@ int main(int argc, char* argv[]) {
                     outputFile << " ";
                 }
             }
-            outputFile << endl;
+            if (rowNum != rows - 1) {
+                outputFile << endl;
+            }
         }
     }
 
