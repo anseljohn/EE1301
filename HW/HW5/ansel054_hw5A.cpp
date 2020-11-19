@@ -26,19 +26,8 @@ void updateGrid(char board[lengthX][lengthY], int &xPos, int &yPos, char action)
 
 int main()
 {
-    char board[lengthY][lengthX] = {
-            {BLANK, BLANK, BLANK, WALL , WALL , WALL , WALL , WALL , WALL , WALL},
-            {WALL , BLANK, BLANK, BLANK, BLANK, BLANK, WALL , WALL , WALL , WALL},
-            {WALL , BLANK, WALL , WALL , WALL , BLANK, BLANK, WALL , WALL , WALL},
-            {WALL , WALL , BLANK, BLANK, BLANK, BLANK, WALL , WALL , WALL , WALL},
-            {WALL , WALL , BLANK, BLANK, BLANK, WALL , WALL , WALL , WALL , WALL},
-            {BLANK, BLANK, BLANK, WALL , WALL , BLANK, BLANK, WALL , WALL , WALL},
-            {BLANK, BLANK, BLANK, WALL , WALL , WALL , WALL , WALL , WALL , WALL},
-            {WALL , WALL , BLANK , BLANK , BLANK, WALL , WALL , WALL , WALL , WALL},     
-            {BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, WALL , WALL , WALL},
-            {BLANK, BLANK, BLANK, WALL , WALL , BLANK, BLANK, BLANK, BLANK, ROBOT}
-        };
-    int xPos = lengthX - 1, yPos = lengthY - 1;
+    char board[lengthY][lengthX] = {0};
+    int xPos = 0, yPos = 0;
 
     initBoard(board, xPos, yPos);
 
@@ -70,7 +59,41 @@ Inputs:
 Outputs: NA
 */
 void initBoard(char board[lengthY][lengthX], int &xPos, int &yPos) {
-        board[0][0] = GOAL;
+    ifstream customBoard ("./maze.txt");
+    string line = "";
+    if (customBoard.is_open()) {
+        int i = 0;
+        int j = 0;
+        while (getline(customBoard, line)) {
+            board[i][j] = line.at(i);
+            if (i == 10) {
+                i = 0;
+                j++;
+            }
+        }
+    } else {
+        char defaultBoard[lengthY][lengthX] = {
+            {BLANK , BLANK , GOAL  , WALL  , WALL  , WALL  , WALL  , WALL  , WALL  , WALL  },
+            {BLANK , BLANK , BLANK , BLANK , BLANK , BLANK , WALL  , WALL  , WALL  , WALL  },
+            {WALL  , BLANK , WALL  , WALL  , WALL  , BLANK , BLANK , WALL  , WALL  , WALL  },
+            {WALL  , WALL  , BLANK , BLANK , BLANK , BLANK , WALL  , WALL  , WALL  , WALL  },
+            {WALL  , WALL  , BLANK , BLANK , BLANK , WALL  , WALL  , WALL  , WALL  , WALL  },
+            {BLANK , BLANK , BLANK , WALL  , WALL  , BLANK , BLANK , WALL  , WALL  , WALL  },
+            {BLANK , BLANK , BLANK , WALL  , WALL  , WALL  , WALL  , WALL  , WALL  , WALL  },
+            {WALL  , WALL  , BLANK , BLANK , BLANK , WALL  , WALL  , WALL  , WALL  , WALL  },     
+            {BLANK , BLANK , BLANK , BLANK , BLANK , BLANK , BLANK , WALL  , WALL  , WALL  },
+            {BLANK , BLANK , BLANK , WALL  , WALL  , BLANK , BLANK , BLANK , BLANK , ROBOT }
+        };
+    }
+
+    for(int curRow=0; curRow < lengthY; curRow++) {
+        for(int curCol=0; curCol < lengthX; curCol++) {
+            board[curRow][curCol] = defaultBoard[curRow][curCol];
+        }
+    }
+
+    xPos = lengthX - 1;
+    yPos = lengthY - 1;
 }
 
 /*
