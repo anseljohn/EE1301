@@ -63,13 +63,17 @@ void initBoard(char board[lengthY][lengthX], int &xPos, int &yPos) {
     string line = "";
     if (customBoard.is_open()) {
         int i = 0;
-        int j = 0;
         while (getline(customBoard, line)) {
-            board[i][j] = line.at(i);
-            if (i == 10) {
-                i = 0;
-                j++;
+            for (int j = 0; j < lengthX; j++) {
+                char charAtIJ = line.at(j);
+                if (charAtIJ == ROBOT) {
+                    xPos = j;
+                    yPos = i;
+                    
+                }
+                board[i][j] = charAtIJ;
             }
+            i++;
         }
     } else {
         char defaultBoard[lengthY][lengthX] = {
@@ -84,16 +88,16 @@ void initBoard(char board[lengthY][lengthX], int &xPos, int &yPos) {
             {BLANK , BLANK , BLANK , BLANK , BLANK , BLANK , BLANK , WALL  , WALL  , WALL  },
             {BLANK , BLANK , BLANK , WALL  , WALL  , BLANK , BLANK , BLANK , BLANK , ROBOT }
         };
-    }
 
-    for(int curRow=0; curRow < lengthY; curRow++) {
-        for(int curCol=0; curCol < lengthX; curCol++) {
-            board[curRow][curCol] = defaultBoard[curRow][curCol];
+        for(int curRow=0; curRow < lengthY; curRow++) {
+            for(int curCol=0; curCol < lengthX; curCol++) {
+                board[curRow][curCol] = defaultBoard[curRow][curCol];
+            }
         }
-    }
 
-    xPos = lengthX - 1;
-    yPos = lengthY - 1;
+        xPos = lengthX - 1;
+        yPos = lengthY - 1;
+    }
 }
 
 /*
