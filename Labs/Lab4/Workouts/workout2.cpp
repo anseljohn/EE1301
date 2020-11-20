@@ -34,6 +34,8 @@ int main() {
     return 1;
 }
 
+
+// This function requires reference parameters because they need to modify the actual value
 void minutesToTime(int minutes, int &hours, int &mins) {
     hours = minutes / 60;
     mins = minutes - (60 * hours);
