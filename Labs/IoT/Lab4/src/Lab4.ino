@@ -15,6 +15,14 @@ enum BLINK_STATE {
   ONE_PER_SEC, 
   HALF_PER_SEC,
   QUARTER_PER_SEC
+
+  // BLINK_STATE blink_state(int index) {
+  //   switch (index) {
+  //     case 0: ONE_PER_SEC;
+  //     case 1: HALF_PER_SEC;
+  //     case 2: QUARTER_PER_SEC;
+  //   }
+  // }
 };
 
 int mButtonPIN = D2;
@@ -26,6 +34,8 @@ int mLedPIN = D7;
 BLINK_STATE mBlinkState;
 int mBlinkStateCounter = 0;
 int mBlinkDelay = 0;
+bool on = false;
+unsigned long int mNextTime = 0;
 
 
 // setup() runs once, when the device is first turned on.
@@ -44,7 +54,6 @@ void setup() {
 void loop() {
   updateButtonState(digitalRead(mButtonPIN));
   updateBlinkState(mBlinkStateCounter);
-
 }
 
 void updateButtonState(int pCurrentState) {
@@ -72,10 +81,18 @@ void ledOff() {
 }
 
 void blinkLED(int pDelayMS) {
+
+  // This is use of delay
   ledOn();
   delay(pDelayMS);
   ledOff();
   delay(pDelayMS);
+
+  if (millis() > mNextTime) {
+    on = !on;
+    digitalWrite(mLedPIN, on);
+    mNextTime += pDelayMS;
+  }
 }
 
 void updateBlinkState(int pBlinkStateCounter) {
@@ -85,18 +102,21 @@ void updateBlinkState(int pBlinkStateCounter) {
       mBlinkStateCounter = 0;
     }
   }
-  mBlinkState = BLINK_STATE(pBlinkStateCounter);
+  mBlinkState = (BLINK_STATE) pBlinkStateCounter;
 
   switch (mBlinkState) {
     case ONE_PER_SEC:
       mBlinkDelay = 500;
+      break;
     
     case HALF_PER_SEC:
       mBlinkDelay = 1000;
+      break;
 
     case QUARTER_PER_SEC:
       mBlinkDelay = 2000;
+      break;
   }
-
+  Serial.println(mBlinkDelay);
   blinkLED(mBlinkDelay);
 }
