@@ -1,3 +1,9 @@
+/******************************************************/
+//       THIS IS A GENERATED FILE - DO NOT EDIT       //
+/******************************************************/
+
+#include "Particle.h"
+#line 1 "/Users/owner/Documents/School/ee1301Main/EE1301/Labs/IoT/Lab4/src/Lab4.ino"
 /*
  * Project Lab4
  * Description:
@@ -5,6 +11,14 @@
  * Date:
  */
 
+void setup();
+void loop();
+void updateButtonState(int pCurrentState);
+void ledOn();
+void ledOff();
+void blinkLED(int pDelayMS);
+void updateBlinkState(int pBlinkStateCounter);
+#line 8 "/Users/owner/Documents/School/ee1301Main/EE1301/Labs/IoT/Lab4/src/Lab4.ino"
 enum BUTTON_STATE {
   PRESSED,
   NOT_PRESSED
