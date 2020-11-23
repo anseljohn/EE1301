@@ -10,45 +10,50 @@
 
 using namespace std;
 
+const int N = 100;
+
 int main(int argc, char* argv[]) {
     if (argc != 2) {
         cout << "INPUT ERROR: program requires one text file input" << endl;
     } else {
-        ifstream inputPixels (argv[1]);
+        ifstream inputPixels;
 
-        // Will never be above 100 x 100
-        const int N = 10;
         int readMatrix[N][N] = {0};
         int newMatrix[N][N] = {0};
-        memset(readMatrix, 0, N*N*sizeof(int));
-        memset(newMatrix, 0, N*N*sizeof(int));
-        string line = "";
+        int rows = 0;
+        int cols = 0;
+        string line;
 
+        inputPixels.open(argv[1]);
         if (inputPixels.is_open()) {
-            int i = 0;
-            int j = 0;
             while (getline(inputPixels, line)) {
                 string temp = "";
-                for (int charAt = 0; charAt < line.size(); charAt++) {
-                    if (line.at(charAt) != ' ') {
+                for (int charAt = 0; charAt < line.length(); charAt++) {
+                    if (line.at(charAt) != ' ' || charAt == line.length() - 1) {
                         temp += line.at(charAt);
                     } else {
-                        readMatrix[i][j] = stoi(temp);
+                        readMatrix[rows][cols] = stoi(temp);
+                        // cout << readMatrix[rows][cols] << " ";
                         temp = "";
-                        j++;
+                        if (rows == 0) {
+                            cols++;
+                        }
                     }
                 }
-                i++;
+                // cout << endl;
+                rows++;
+                cout << rows << " " << cols << endl;
+
             }
-
-            // for (int i = 0; i < N; i++) {
-            //     for (int j = 0; j < N; j++) {
-            //         cout << readMatrix[i][j] << " ";
-            //     }
-            //     cout << endl;
-            // }
         }
+        inputPixels.close();
 
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                cout << readMatrix[rows][cols] << " ";
+            }
+            cout << endl;
+        }
     }
 
     return 0;
