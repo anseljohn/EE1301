@@ -8,8 +8,8 @@
 #include "Particle.h"
 #include "neopixel.h"
 
-// STATES
-enum ALARM_STATUS {
+// STATES ENUMS
+enum SYSTEM_STATUS {
     ARMED,
     DISARMED
 };
@@ -18,6 +18,11 @@ enum BUTTON_STATE {
     PRESSED,
     NOT_PRESSED
 };
+
+// STATES
+BUTTON_STATE mCurrentButtonState;
+BUTTON_STATE mPreviousButtonState;
+SYSTEM_STATUS mCurrentSystemStatus;
 
 
 // Pins
@@ -33,10 +38,11 @@ Adafruit_NeoPixel mSystemStatusLED = Adafruit_NeoPixel(PIXEL_COUNT, PIXEL_PIN, P
 const int COLOR_ARMED = mSystemStatusLED.Color(255, 0, 0);
 const int COLOR_DISARMED = mSystemStatusLED.Color(0, 255, 0);
 
-// Button vars
-BUTTON_STATE mCurrentButtonState;
-BUTTON_STATE mPreviousButtonState;
 bool mJustPressed;
+
+void updateButtonState(int pCurrent);
+void updateSystemState(bool pButtonPressed, SYSTEM_STATUS pCurrentStatus);
+void setStatusLED(int pColor);
 
 void setup() {
     pinMode(BUTTON_PIN, INPUT_PULLDOWN);
@@ -44,13 +50,28 @@ void setup() {
     mSystemStatusLED.begin();
     mCurrentButtonState = NOT_PRESSED;
     mPreviousButtonState = mCurrentButtonState;
+    mCurrentSystemStatus = DISARMED;
+
     mJustPressed = false;
 }
 
 void loop() {
-    mSystemStatusLED.setPixelColor(0, COLOR_ARMED);
+    updateButtonState(digitalRead(BUTTON_PIN));
+    updateSystemState(mJustPressed, mCurrentSystemStatus);
+
+    switch (mCurrentSystemStatus) {
+        case ARMED:
+            setStatusLED(COLOR_ARMED);
+            break;
+
+        case DISARMED:
+            setStatusLED(COLOR_DISARMED);
+            break;
+    }
+
     mSystemStatusLED.show();
 }
+
 
 // State updating
 /**
@@ -74,4 +95,18 @@ void updateButtonState(int pCurrent) {
     mPreviousButtonState = mCurrentButtonState;
 }
 
-// Misc functions
+void updateSystemState(bool pButtonPressed, SYSTEM_STATUS pCurrentStatus) {
+    if (pButtonPressed) {
+        if (pCurrentStatus + 1 > 1) {
+            mCurrentSystemStatus = (SYSTEM_STATUS) 0;
+        } else {
+            mCurrentSystemStatus = (SYSTEM_STATUS) 1;
+        }
+    }
+}
+
+
+// Setters
+void setStatusLED(int pColor) {
+    mSystemStatusLED.setPixelColor(0, pColor);
+}
