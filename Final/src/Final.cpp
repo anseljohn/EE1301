@@ -1,3 +1,8 @@
+/******************************************************/
+//       THIS IS A GENERATED FILE - DO NOT EDIT       //
+/******************************************************/
+
+#line 1 "c:/Users/Administrator/Documents/dev/ee1301-master/EE1301/Final/src/Final.ino"
 /*
  * Project Final
  * Description: Final project
@@ -10,6 +15,9 @@
 
 
 // Pixel Variables
+void setup();
+void loop();
+#line 13 "c:/Users/Administrator/Documents/dev/ee1301-master/EE1301/Final/src/Final.ino"
 const int PIXEL_PIN = D0;
 const int PIXEL_COUNT = 1;
 const int PIXEL_TYPE = WS2811;
