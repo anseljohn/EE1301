@@ -88,6 +88,8 @@ void blinkLED(int pDelayMS) {
   ledOff();
   delay(pDelayMS);
 
+
+  // Without the use of delay
   if (millis() > mNextTime) {
     on = !on;
     digitalWrite(mLedPIN, on);
