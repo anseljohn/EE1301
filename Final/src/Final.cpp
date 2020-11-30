@@ -47,6 +47,7 @@ const int COLOR_ARMED = mSystemStatusLED.Color(255, 0, 0);
 const int COLOR_DISARMED = mSystemStatusLED.Color(0, 255, 0);
 
 bool mJustPressed;
+int timesPressed = 0;
 
 void updateButtonState(int pCurrent);
 void updateSystemState(bool pButtonPressed, SYSTEM_STATUS pCurrentStatus);
@@ -77,6 +78,8 @@ void loop() {
             break;
     }
 
+    Serial.println(timesPressed);
+
     mSystemStatusLED.show();
 }
 
@@ -94,8 +97,9 @@ void updateButtonState(int pCurrent) {
         mCurrentButtonState = NOT_PRESSED;
     }
     
-    if (pCurrent == PRESSED && mPreviousButtonState == NOT_PRESSED) {
+    if (mCurrentButtonState == PRESSED && mPreviousButtonState == NOT_PRESSED) {
         mJustPressed = true;
+        timesPressed++;
     } else {
         mJustPressed = false;
     }
