@@ -439,23 +439,23 @@ static Hal_Pin_Info* PIN_MAP = HAL_Pin_Map();
  80a01ea:	f002 f819 	bl	80a2220 <__aeabi_atexit>
 
 // Colors
-const int COLOR_ARMED = mSystemStatusLED.Color(255, 0, 0);
+const int COLOR_ARMED = mSystemStatusLED.Color(40, 0, 0);
  80a01ee:	2200      	movs	r2, #0
  80a01f0:	4611      	mov	r1, r2
- 80a01f2:	20ff      	movs	r0, #255	; 0xff
+ 80a01f2:	2028      	movs	r0, #40	; 0x28
  80a01f4:	f001 f97b 	bl	80a14ee <_ZN17Adafruit_NeoPixel5ColorEhhh>
  80a01f8:	4b07      	ldr	r3, [pc, #28]	; (80a0218 <_GLOBAL__sub_I_mCurrentButtonState+0x48>)
-const int COLOR_DISARMED = mSystemStatusLED.Color(0, 255, 0);
+const int COLOR_DISARMED = mSystemStatusLED.Color(0, 40, 0);
  80a01fa:	2200      	movs	r2, #0
 const int PIXEL_COUNT = 1;
 const int PIXEL_TYPE = WS2811;
 Adafruit_NeoPixel mSystemStatusLED = Adafruit_NeoPixel(PIXEL_COUNT, PIXEL_PIN, PIXEL_TYPE);
 
 // Colors
-const int COLOR_ARMED = mSystemStatusLED.Color(255, 0, 0);
+const int COLOR_ARMED = mSystemStatusLED.Color(40, 0, 0);
  80a01fc:	6018      	str	r0, [r3, #0]
-const int COLOR_DISARMED = mSystemStatusLED.Color(0, 255, 0);
- 80a01fe:	21ff      	movs	r1, #255	; 0xff
+const int COLOR_DISARMED = mSystemStatusLED.Color(0, 40, 0);
+ 80a01fe:	2128      	movs	r1, #40	; 0x28
  80a0200:	4610      	mov	r0, r2
  80a0202:	f001 f974 	bl	80a14ee <_ZN17Adafruit_NeoPixel5ColorEhhh>
  80a0206:	4b05      	ldr	r3, [pc, #20]	; (80a021c <_GLOBAL__sub_I_mCurrentButtonState+0x4c>)

@@ -43,8 +43,8 @@ const int PIXEL_TYPE = WS2811;
 Adafruit_NeoPixel mSystemStatusLED = Adafruit_NeoPixel(PIXEL_COUNT, PIXEL_PIN, PIXEL_TYPE);
 
 // Colors
-const int COLOR_ARMED = mSystemStatusLED.Color(255, 0, 0);
-const int COLOR_DISARMED = mSystemStatusLED.Color(0, 255, 0);
+const int COLOR_ARMED = mSystemStatusLED.Color(40, 0, 0);
+const int COLOR_DISARMED = mSystemStatusLED.Color(0, 40, 0);
 
 bool mJustPressed;
 int timesPressed = 0;
