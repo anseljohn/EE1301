@@ -33,5 +33,5 @@ void setup() {
 
 void loop() {
     mSystemStatusLED.setPixelColor(0, COLOR_ARMED);
-
+    mSystemStatusLED.show();
 }
