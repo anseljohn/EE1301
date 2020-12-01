@@ -33,7 +33,6 @@ Die::Die(int pMinRoll, int pMaxRoll) {
 }
 
 int Die::roll() {
-    srand(time(NULL));
     return rand()%(mMaxRoll - mMinRoll + 1) + mMinRoll;
 }
 
@@ -42,19 +41,20 @@ int Die::roll() {
  *******************************/
 
 int main() {
+    srand(time(NULL));
 
     int inputMinRoll;
     int inputMaxRoll;
     cout << "Let's set up a die to roll. What are the minimum and maximum\nvalues for this die?" << endl;
-    cout << "Minimum: ";
+    cout << "Minimum Value: ";
     cin >> inputMinRoll;
-    cout << "Maximum: ";
+    cout << "Maximum Value: ";
     cin >> inputMaxRoll;
 
     Die mDie(inputMinRoll, inputMaxRoll);
 
-    cout << "The die is rolled 10 times. The results of those rolls are:";
-    for (int i = 0; i < 9; i++) {
+    cout << "\nThe die is rolled 10 times. The results of those rolls are:\n";
+    for (int i = 0; i < 8; i++) {
         cout << "Roll #" << (i + 1) << " was: " << mDie.roll() << endl;
     }
     cout << "Roll #9 was: " << mDie.roll();
