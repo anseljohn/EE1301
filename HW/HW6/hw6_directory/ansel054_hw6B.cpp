@@ -1,3 +1,8 @@
+// EE 1301 
+// HW 6B
+// John Anselmo
+// ansel054
+
 #include <iostream>
 #include <cstdlib>
 using namespace std;
