@@ -1,3 +1,8 @@
+// EE 1301 
+// HW 6B
+// John Anselmo
+// ansel054
+
 #include <iostream>
 #include <cstdlib>
 using namespace std;
@@ -6,15 +11,9 @@ const int MAX_NUM_DICE=50;
 int rounds;
 
 void userInputParser(string s, int dice[], int maxNumDie);
-void getStatistics(int diceData[], int stats[]);
 
 int main() {
-    int pairs[2 * MAX_NUM_DICE + 1] = {0};
-
-
-    int sampleDice[2 * MAX_NUM_DICE + 1] = {0};
-    int sampleRoll[2 * MAX_NUM_DICE] = {0};
-
+    int dice[2 * MAX_NUM_DICE + 1] = {0};
     srand(time(0)); // DO NOT WRITE THIS LINE AGAIN OR ANYWHERE ELSE
 
     cout << "What die do you want to roll? (e.g. 4d3+2) ";
@@ -23,78 +22,48 @@ int main() {
     cout << "How many rounds do you want to roll? ";
     cin >> rounds;
 
-    userInputParser(s, sampleDice, MAX_NUM_DICE);
-    int sampleRollData = 0;
-    for (int i = 1; i < sampleDice[0]; i+=2) {
-        sampleRollData += rand() % (sampleDice[i + 1] - sampleDice[i] + 1) + sampleDice[i];
+    // The maxes and mins of the dice remain constant, so I only need to generate the dice once.
+    userInputParser(s, dice, MAX_NUM_DICE);
+    int sampleRollData = 0; // Sample roll
+    for (int i = 1; i < dice[0]; i+=2) {
+        sampleRollData += rand() % (dice[i + 1] - dice[i] + 1) + dice[i];
 
     }
     cout << "Sample roll: " << sampleRollData << endl;
 
-    int dice[MAX_NUM_DICE * 2] = {0};
-    userInputParser(s, dice, MAX_NUM_DICE);
-
-    long int smallest = INT64_MAX;
-    int biggest = 0;
-    int total = 0;
+    long int smallest = INT64_MAX; // Some overly large arbitrary number, all others of which would be smaller
+    int biggest = 0; // The smallest possible value (everything is bigger as roll >= 1)
+    int total = 0; // Complete total for averaging
     for (int i = 0; i < rounds; i++) {
-        int roundRoll[MAX_NUM_DICE] = {0};
         int rollIndex = 0;
-        int roundTotal = 0;
+        int roundTotal = 0; // Keep track of the current round's roll to compare to others
+        
+        // Generate each dice roll to add to round total
         for (int j = 1; j < dice[0]; j+=2) {
             int min = dice[j];
             int max = dice[j + 1];
-            int roll = rand() % (max - min + 1) + min;
-            // cout << "ROLL: " << roll << endl;
-            roundRoll[rollIndex] = roll;
+            int roll = rand() % (max - min + 1) + min; 
             roundTotal += roll;
             rollIndex++;
-            // cout << "TOT: " << roundTotal << endl;
         }
-        // cout << "*** TOTAL *** : " << roundTotal << endl;
-        // cout << endl << endl << endl;
 
+        // Comparing the round's roll to the current biggest and smallest
         if (roundTotal > biggest) {
             biggest = roundTotal;
         }
-
         if (roundTotal < smallest) {
             smallest = roundTotal;
         }
 
+        // Add to the total: all rounds added together
         total += roundTotal;
     }
 
     cout << "Minimum roll: " << smallest << endl;
     cout << "Maximum roll: " << biggest << endl;
     cout << "Average roll: " << (((double) total) / ((double) rounds)) << endl;
-
-    // userInputParser(s, pairs, MAX_NUM_DICE);
-
-
-
-    // This example code will display the array of die information 
-    // retrieved from user.
-
-    // pairs[] is an array with the following format:
-    // {num_dice,
-    //  first_die_start,
-    //  first_die_end,
-    //  second_die_start,
-    //  ... }
-    // cout << "Number of Die Detected: " << pairs[0]/2 << endl;
-    // for(int i=1; i < pairs[0]; i=i+2) {
-    //     cout << "Die #" << (i+1)/2 << ", ";
-    //     cout << "min value: " << pairs[i] << ", ";
-    //     cout << "max value: " << pairs[i+1] << "." << endl;
-
-
-    // }
-    // == Replace the code above this line with your code. ==
     
-}
-
-void getStatistics(int rolls[], int stats) {
+    return 0;
 }
 
 void userInputParser(string s, int dice[], int maxNumDie) {
