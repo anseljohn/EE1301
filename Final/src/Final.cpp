@@ -2,7 +2,7 @@
 //       THIS IS A GENERATED FILE - DO NOT EDIT       //
 /******************************************************/
 
-#line 1 "/home/john/Documents/School/eemain/EE1301/Final/src/Final.ino"
+#line 1 "/Users/anseljohn/Documents/School/Freshman/Fall/ee1301Main/EE1301/Final/src/Final.ino"
 /*
  * Project Final
  * Description: Final project
@@ -17,7 +17,7 @@
 void setup();
 void loop();
 float getDistance();
-#line 12 "/home/john/Documents/School/eemain/EE1301/Final/src/Final.ino"
+#line 12 "/Users/anseljohn/Documents/School/Freshman/Fall/ee1301Main/EE1301/Final/src/Final.ino"
 enum SYSTEM_STATUS {
     ARMED,
     DISARMED
