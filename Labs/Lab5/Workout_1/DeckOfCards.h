@@ -10,7 +10,6 @@ class DeckOfCards {
     private:
         int deck[52];
         int nextCardIndex;
-        const int deckN = 51;
 };
 
 #endif
