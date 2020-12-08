@@ -49,7 +49,6 @@ void setStatusLED(int pColor);
 
 void setup() {
     pinMode(BUTTON_PIN, INPUT_PULLDOWN);
-    pinMode()
 
     mSystemStatusLED.begin();
     mCurrentButtonState = NOT_PRESSED;
