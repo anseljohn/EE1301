@@ -1,3 +1,9 @@
+// EE 1301 
+// HW 6C
+// John Anselmo
+// ansel054
+
+
 #include <iostream>
 #include <fstream>
 using namespace std;
@@ -44,6 +50,9 @@ int main() {
 }
 
 
+// Recursively search through a sorted list!
+// If the middle value is too big, search left, if it's too small, search right
+// if it's equal, return the index!
 int binarySearch(int pArray[], int pToFind, int pStart, int pStop) {
     int index = (pStart + pStop) / 2; // Index right in the middle;
     int valueAtIndex = pArray[index];
@@ -60,6 +69,7 @@ int binarySearch(int pArray[], int pToFind, int pStart, int pStop) {
 }
 
 
+// Simple parser using spaces for the array in a text file
 int parseStringForArray(string pLine, int array[]) {
     string integer = "";
     int arrayIndex = 0;

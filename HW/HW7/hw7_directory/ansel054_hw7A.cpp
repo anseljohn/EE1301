@@ -1,3 +1,9 @@
+// EE 1301 
+// HW 7A
+// John Anselmo
+// ansel054
+
+
 // EE1301 HW7A Starting File
 //
 // This example goes into how to create and use a linked list, and store a very large amount of data in dynamic data, 
@@ -149,6 +155,34 @@ houseData* FindNodeLessThanZip(houseData* head, int zipcode) {
 //   listHead - a HouseData pointer, pointing to the top element in a sorted linked list
 // Outputs: None
 void PrintAveragePriceByZip(houseData* head) {
+    houseData* current = head;
+    houseData* prev = current;
+    int totalForZip = 0;
+    int housesInZip = 0;
+    while (current != NULL) {
+        // cout << "Prev: " << prev->zipcode << endl << "Curr: " << current->zipcode << "\n\n";
+        if (current == head) {
+            totalForZip += current->price;
+            housesInZip++;
+            prev = current;
+            current = current->next;
+            continue;
+        } else if (current->zipcode == prev->zipcode) {
+            totalForZip += current->price;
+            housesInZip++;
+            if (current->next == NULL) {
+                cout << prev->zipcode << ":average price=" << (totalForZip / housesInZip) << endl;
+                totalForZip = current->price;
+                housesInZip = 1;
+            }
+        } else {
+            cout << prev->zipcode << ":average price=" << (totalForZip / housesInZip) << endl;
+            totalForZip = current->price;
+            housesInZip = 1;
+        }
+        prev = current;
+        current = current->next;
+    }
 }
 
 // Function to deallocate entire linked list
