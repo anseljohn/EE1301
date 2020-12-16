@@ -2,7 +2,7 @@
 //       THIS IS A GENERATED FILE - DO NOT EDIT       //
 /******************************************************/
 
-#line 1 "c:/Users/Administrator/Documents/dev/ee1301-master/EE1301/Final/src/Final.ino"
+#line 1 "/Users/anseljohn/Documents/School/Freshman/Fall/ee1301Main/EE1301/Final/src/Final.ino"
 /*
  * Project Final
  * Description: Final project
@@ -16,7 +16,8 @@
 // STATES ENUMS
 void setup();
 void loop();
-#line 12 "c:/Users/Administrator/Documents/dev/ee1301-master/EE1301/Final/src/Final.ino"
+float getDistance();
+#line 12 "/Users/anseljohn/Documents/School/Freshman/Fall/ee1301Main/EE1301/Final/src/Final.ino"
 enum SYSTEM_STATUS {
     ARMED,
     DISARMED
@@ -36,6 +37,8 @@ SYSTEM_STATUS mCurrentSystemStatus;
 // Pins
 const int BUTTON_PIN = D2;
 const int PIXEL_PIN = D0;
+const int TRIG_PIN = A0;
+const int ECHO_PIN = D3;
 
 // Pixel vars
 const int PIXEL_COUNT = 1;
@@ -78,7 +81,7 @@ void loop() {
             break;
     }
 
-    Serial.println(timesPressed);
+    Serial.println(getDistance());
 
     mSystemStatusLED.show();
 }
@@ -121,4 +124,23 @@ void updateSystemState(bool pButtonPressed, SYSTEM_STATUS pCurrentStatus) {
 // Setters
 void setStatusLED(int pColor) {
     mSystemStatusLED.setPixelColor(0, pColor);
+}
+
+
+// Getters
+float getDistance() {
+  float echoTime;                   //variable to store the time it takes for a ping to bounce off an object
+  float calculatedDistance;         //variable to store the distance calculated from the echo time
+
+  //send out an ultrasonic pulse that's 10ms long
+  digitalWrite(TRIG_PIN, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(TRIG_PIN, LOW);
+
+  echoTime = pulseIn(ECHO_PIN, HIGH);      //use the pulsein command to see how long it takes for the
+                                          //pulse to bounce back to the sensor
+
+  calculatedDistance = echoTime / 148.0;  //calculate the distance of the object that reflected the pulse (half the bounce time multiplied by the speed of sound)
+
+  return calculatedDistance;              //send back the distance that was calculated
 }

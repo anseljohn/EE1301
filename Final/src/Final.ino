@@ -28,6 +28,8 @@ SYSTEM_STATUS mCurrentSystemStatus;
 // Pins
 const int BUTTON_PIN = D2;
 const int PIXEL_PIN = D0;
+const int TRIG_PIN = A0;
+const int ECHO_PIN = D3;
 
 // Pixel vars
 const int PIXEL_COUNT = 1;
@@ -70,7 +72,7 @@ void loop() {
             break;
     }
 
-    Serial.println(timesPressed);
+    Serial.println(getDistance());
 
     mSystemStatusLED.show();
 }
@@ -113,4 +115,23 @@ void updateSystemState(bool pButtonPressed, SYSTEM_STATUS pCurrentStatus) {
 // Setters
 void setStatusLED(int pColor) {
     mSystemStatusLED.setPixelColor(0, pColor);
+}
+
+
+// Getters
+float getDistance() {
+  float echoTime;                   //variable to store the time it takes for a ping to bounce off an object
+  float calculatedDistance;         //variable to store the distance calculated from the echo time
+
+  //send out an ultrasonic pulse that's 10ms long
+  digitalWrite(TRIG_PIN, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(TRIG_PIN, LOW);
+
+  echoTime = pulseIn(ECHO_PIN, HIGH);      //use the pulsein command to see how long it takes for the
+                                          //pulse to bounce back to the sensor
+
+  calculatedDistance = echoTime / 148.0;  //calculate the distance of the object that reflected the pulse (half the bounce time multiplied by the speed of sound)
+
+  return calculatedDistance;              //send back the distance that was calculated
 }
